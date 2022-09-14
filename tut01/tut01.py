@@ -29,6 +29,16 @@ def octant(df):
 
     return df
 
+#To calculate the no of rows(in a given range from start to stop) having a particular octant value
+
+
+def no_of_counts(df, start, stop, octant_value):
+    ci = 0  # counter variable
+    for j in range(start, stop, 1):
+        if(df.loc[j, "Octant"] == octant_value):
+            ci = ci+1
+
+    return ci
 
 
 def octant_identification(mod=5000):
@@ -50,7 +60,7 @@ def octant_identification(mod=5000):
     df['Octant ID']='' #creating an empty column for storing ranges 
     
     df.at[1,'Octant ID']='MOD '+str(mod)
-    print(df)
+   
     k = [1, -1, 2, -2, 3, -3, 4, -4] #storing possible values of octant in a list
 
     #creating columns of possible octant values
@@ -62,10 +72,28 @@ def octant_identification(mod=5000):
     for i in k:
         df.at[0, i] = df['Octant'].value_counts()[i] #value_counts returns list containing the number if occurrences  of different values present in the column 
 
-
+    #the starting row for writing the counts in ranges
     count=2
-    #for calculating ranges for summing the octants 
+    
+    #for calculating ranges for summing the octants  
+    begin=0000
+    end=mod-1
 
+    # for calculating counts in the given ranges and storing it 
+    while (begin<n):
+            
+        df.at[count, "Octant ID"] =str(begin)+"-"+str(end)
+        for i in k: 
+            df.at[count,i]=no_of_counts(df,begin,end,i)
+        count=count+1
+        if(end!=n-1):
+            begin=end+1
+        if(end==n-1):
+            break
+        if(begin+mod-1<=n-1):
+            end=begin+mod-1
+        elif(begin+mod-1> n-1):
+            end=n-1
 
 
     df.to_csv('C:/Users/Gargi/Desktop/2001EE89_2022/tut01/octant_output.csv',index=None)
@@ -80,4 +108,4 @@ else:
     print("Please install 3.8.10. Instruction are present in the GitHub Repo/Webmail. Url: https://pastebin.com/nvibxmjw")
 
 
-#octant_identification(mod)
+
