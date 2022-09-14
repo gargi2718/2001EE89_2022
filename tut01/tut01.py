@@ -30,6 +30,8 @@ def octant(df):
     return df
 
 
+
+def octant_identification(mod=5000):
    
     df = pd.read_csv(r'C:\Users\Gargi\Desktop\2001EE89_2022\tut01\octant_input.csv')
 
