@@ -46,9 +46,30 @@ def octant_identification(mod=5000):
     df['Octant']=df["U"] # declaring Octant with dummy variables for now
     df = octant(df) # for calculating the octant and storing it in Octant column of the dataframe
     df[''] = '' #adding an empty column with empty values 
+    df.at[1,'']="User Input" # adding it the way it was in output file 
+    df['Octant ID']='' #creating an empty column for storing ranges 
+    
+    df.at[1,'Octant ID']='MOD '+str(mod)
+    print(df)
+    k = [1, -1, 2, -2, 3, -3, 4, -4] #storing possible values of octant in a list
+
+    #creating columns of possible octant values
+    for col in k:
+        df[col]=''
+    df.at[0,'Octant ID']='Overall Count'
+
+    #For calculating the overall counts of values in each octant 
+    for i in k:
+        df.at[0, i] = df['Octant'].value_counts()[i] #value_counts returns list containing the number if occurrences  of different values present in the column 
+
+
+    count=2
+    #for calculating ranges for summing the octants 
+
 
 
     df.to_csv('C:/Users/Gargi/Desktop/2001EE89_2022/tut01/octant_output.csv',index=None)
+# calling function 
 octant_identification()
 from platform import python_version
 ver = python_version()
