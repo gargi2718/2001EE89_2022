@@ -34,7 +34,7 @@ def octant(df):
 
 def no_of_counts(df, start, stop, octant_value):
     ci = 0  # counter variable
-    for j in range(start, stop, 1):
+    for j in range(start, stop+1, 1):
         if(df.loc[j, "Octant"] == octant_value):
             ci = ci+1
 
