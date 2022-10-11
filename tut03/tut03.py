@@ -58,7 +58,7 @@ def octant_identification():
     df[" "]=""
     try:
         df.to_excel(
-            'C:/Users/Gargi/Desktop/2001EE89_2022/tut03/octant_output_longest_subsequence.xlsx', index=False)
+            'C:/Users/Gargi/Desktop/2001EE89_2022/tut03/output_octant_longest_subsequence.xlsx', index=False)
     except:
         print("Permission denied")
     
@@ -67,7 +67,7 @@ def octant_identification():
 def octant_longest_subsequence_count():
     try:
         df = pd.read_excel(
-            r'C:\Users\Gargi\Desktop\2001EE89_2022\tut03\octant_output_longest_subsequence.xlsx')
+            r'C:\Users\Gargi\Desktop\2001EE89_2022\tut03\output_octant_longest_subsequence.xlsx')
     except ImportError:
         print("Wrong File Path")
     k=[+1,-1,+2,-2,+3,-3,+4,-4]
@@ -115,7 +115,7 @@ def octant_longest_subsequence_count():
 
     try:
         df.to_excel(
-            'C:/Users/Gargi/Desktop/2001EE89_2022/tut03/octant_output_longest_subsequence.xlsx', index=False)
+            'C:/Users/Gargi/Desktop/2001EE89_2022/tut03/output_octant_longest_subsequence.xlsx', index=False)
     except:
         print("Permission denied")
 

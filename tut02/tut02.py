@@ -113,8 +113,8 @@ def octant_identification(mod=5000):
 # calling function for Part 1 and Part 2
 octant_identification()
 
-
-#Part 3: Calculating the transition count for 
+#Part 3: Calculating the overall transition count and mod transition count
+#Calculating the overall transition count
 def overall_transition_count():
     k = [1, -1, 2, -2, 3, -3, 4, -4]
     #counter to keep track of rows so that we can store our output in specific rows 
@@ -127,7 +127,7 @@ def overall_transition_count():
         print("Wrong File Path. Please check path and try again!")
 
     n = len(df)
-    #creating 3 columns for 
+    #Writing headings for table of overall transition count
     df.at[crr, "Octant ID"] = "Overall Transition Count"
     df.at[crr+1,"Octant ID"]="To"
     df.at[crr+3, " "] = "From"
@@ -135,10 +135,11 @@ def overall_transition_count():
         df.at[crr+2, k[i]] = k[i]
     for i in range(8):
         df.at[crr+3+k.index(k[i]), "Octant ID"] = k[i]
+    #Creating cells with initial count as zero 
     for j in range(8):
         for i in range(8):
             df.at[crr+j+3,k[i]]=0
-
+    #Updating the count
     for i in range(0, n-1):
         df.at[crr+3+k.index(df.at[i, "Octant"]), df.at[i+1, "Octant"]] +=1
 
@@ -149,7 +150,7 @@ def overall_transition_count():
     except:
         print("Permission denied")
 
-
+#Calculating overall transition count 
 def mod_transition_count(mod=5000):
     try:
         df = pd.read_excel(
@@ -201,7 +202,7 @@ def mod_transition_count(mod=5000):
 overall_transition_count()
 mod_transition_count()
 
-
+#Checking python_version
 ver = python_version()
 
 if ver == "3.8.10":
