@@ -54,6 +54,7 @@ def octant_identification():
     df['Octant'] = df["U"]  # declaring Octant with dummy variables for now
     # for calculating the octant and storing it in Octant column of the dataframe
     df = octant(df)
+    #Adding an empty column 
     df[" "]=""
     try:
         df.to_excel(
@@ -76,12 +77,15 @@ def octant_longest_subsequence_count():
     df["Count"]=""
     for i in range(8):
         df.at[i,"Octant_Count"]=k[i]
-# Iterating over and trying to find max count possible for subsequence nad aso finding its frequency in the same iteration 
+# Iterating over and trying to find max count possible for subsequence nad also finding its frequency in the same iteration 
     for i in k:
+        #Calculating for each index in k
         count=0
         max=0
         counter=0
+
         for j in range(0,n):
+            #Checking the conditions to check the length of subsequence 
             if(j!=n-1 and df.at[j,"Octant"]==i and df.at[j+1,"Octant"] ==i):
                 counter+=1
 
@@ -101,7 +105,7 @@ def octant_longest_subsequence_count():
                 if(max==0):
                     max=1
                     count=1
-    
+            #When the iterator value doesn't match with the required octant value whose subsequence is to be calculated
             else:
                 counter=0
                 continue
