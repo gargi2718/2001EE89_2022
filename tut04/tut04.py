@@ -4,7 +4,7 @@ import pandas as pd
 import openpyxl
 from platform import python_version
 
-#Part 2: Function to calculate time ranges of the max and min 
+#Part 2: Function to calculate time ranges of the longest subsequence count found in tit 3
 def octant_longest_subsequence_count_with_range():
     try:
         df = pd.read_excel(
@@ -13,14 +13,14 @@ def octant_longest_subsequence_count_with_range():
         print("Wrong File")
     except :
         print("File already open or permission not given to use file")
-    #declaring columns to store values 
+    #declaring null columns to store values 
     df["   "]=''
     df["    "]=''
     df["     "]=''
     df["      "]=''
-    df.at[1, "    "]="Count"
-    df.at[1, "     "]="Longest_Subsequence_Length"
-    df.at[1, "      "]="Count"
+    df.at[0, "    "]="Count"
+    df.at[0, "     "]="Longest_Subsequence_Length"
+    df.at[0, "      "]="Count"
     k = [+1, -1, +2, -2, +3, -3, +4, -4]
     n = len(df)
     cr=2
@@ -162,7 +162,7 @@ def octant_identification():
     except:
         print("Permission denied")
 
-
+#Part 2: longest subsequence count
 def octant_longest_subsequence_count():
     try:
         df = pd.read_excel(
@@ -171,11 +171,12 @@ def octant_longest_subsequence_count():
         print("Wrong File Path")
     k = [+1, -1, +2, -2, +3, -3, +4, -4]
     n = len(df)
-    df["Octant_Count"] = ""
-    df["Longest Subsequence Length"] = ""
-    df["Count"] = ""
+
+    df.at[0,"  "]="Count"
+    df.at[0,"               "]="Longest Subsequence Length"
+    df.at[0,"                   "]="Count"
     for i in range(8):
-        df.at[i, "Octant_Count"] = k[i]
+        df.at[i+1,"  "] = k[i]
     for i in k:
         count = 0
         max = 0
@@ -204,8 +205,8 @@ def octant_longest_subsequence_count():
             else:
                 counter = 0
                 continue
-        df.at[k.index(i), "Longest Subsequence Length"] = max
-        df.at[k.index(i), "Count"] = count
+        df.at[k.index(i)+1, "               "] = max
+        df.at[k.index(i)+1, "                   "] = count
 
     try:
         df.to_excel(
