@@ -13,6 +13,7 @@ def octant_longest_subsequence_count_with_range():
         print("Wrong File")
     except :
         print("File already open or permission not given to use file")
+    #declaring columns to store values 
     df["   "]=''
     df["    "]=''
     df["     "]=''
@@ -55,8 +56,7 @@ def octant_longest_subsequence_count_with_range():
                 counter = 0
                 continue
         
-
-
+        
         df.at[cr, "    "]=i
         df.at[cr, "     "]=max
         df.at[cr, "      "]=count
@@ -71,7 +71,7 @@ def octant_longest_subsequence_count_with_range():
             if(j != n-1 and df.at[j, "Octant"] == i and df.at[j+1, "Octant"] == i):
                 counter += 1
                 if((counter+1) == max):
-                    t_from = df.at[j+1-max-1, "Time"]
+                    t_from = df.at[j+1-max+1, "Time"]
                     t_to = df.at[j+1, "Time"]
                     df.at[cr, "     "]=t_from
                     df.at[cr,"      "]=t_to
