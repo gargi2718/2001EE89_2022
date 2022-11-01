@@ -6,6 +6,7 @@ from openpyxl import Workbook
 from openpyxl import load_workbook
 import numpy as np
 import scipy.stats as ss
+from collections import OrderedDict
 
 start_time = datetime.now()
 
@@ -17,114 +18,56 @@ def octant_range_names(mod=5000):
             r'C:\Users\Gargi\Desktop\2001EE89_2022\tut05\output_octant.xlsx')
     except ImportError:
         print("Wrong File")
-    possible_octant_names = ['Internal outward interaction',
-                             'External outward interaction',
-                             'External Ejection',
-                             'Internal Ejection',
-                             'External inward interaction',
-                             'Internal inward interaction',
-                             'Internal sweep',
-                             'External sweep'
-                             ]
-    '''
-        for i in range(1,9):
+    octant_name_id_mapping = {"1": "Internal outward interaction", "-1": "External outward interaction", "2": "External Ejection",
+                              "-2": "Internal Ejection", "3": "External inward interaction", "-3": "Internal inward interaction", "4": "Internal sweep", "-4": "External sweep"}
+
+    for i in range(1,9,1):
             df["Rank "+ str(i)]=''
+    df["Rank 1 Octant ID"]=''
+    df["Rank 1 Octant Name"]=''
 
-        rank_def={}
-        k=[1,-1,2,-2,3,-3,4,-4]
-        for i in k:
-            rank_def[i]=df.at[1,i]
-
-        sorted_key_def = OrderedDict(sorted(rank_def.items()))
-        
-        octant_name_id_mapping = {"1":"Internal outward interaction", "-1":"External outward interaction", "2":"External Ejection", "-2":"Internal Ejection", "3":"External inward interaction", "-3":"Internal inward interaction", "4":"Internal sweep", "-4":"External sweep"}
-'''   
-    no_of_ranges = int(30000/mod)
-    overall_count = []
-    mod_count = np.zeros((no_of_ranges, 8))
-    mod_ranking = []
-    rank1 = []
- 
-    possible_octant_values = [1, -1, 2, -2, 3, -3, 4, -4]
-
-    row_num = 0
-
+    rank(df,0)
+    k=[1,-1,2,-2,3,-3,4,-4]
+    n=int(30000/mod)
+    cr=2
+    for i in range(n):
+        df=rank(df,cr)
+        cr+=1
+    cr+=2
+    df.at[cr,1]="Octant ID"
+    df.at[cr,-1]="Octant Name"
+    df.at[cr,2]="Count of Rank 1 Mod values"
     for i in range(8):
-        overall_count.append(df.at[row_num,possible_octant_values[i]])
-    row_num = row_num+2
-    for i in range(no_of_ranges):
-        for j in range(8):
-            mod_count[i][j] = df[possible_octant_values[j]][row_num]
-        mod_ranking.append(ss.rankdata(mod_count[i]))
-        row_num = row_num + 1
+        df.at[cr+1+i,1]=k[i]
+        df.at[cr+1+i,-1]=octant_name_id_mapping[k[i]]
+        df.at[cr+1+i,2]=
+    try:
+        df.to_excel(
+            'C:/Users/Gargi/Desktop/2001EE89_2022/tut05/output_octant.xlsx', index=False)
+    except:
+        print("Permission denied")
 
-    print(overall_count)
-    print(mod_count)
-    overall_ranking = ss.rankdata(overall_count)
-    print(overall_ranking)
-    print(mod_ranking)
+def rank(df,cr):
+    octant_name_id_mapping = {"1": "Internal outward interaction", "-1": "External outward interaction", "2": "External Ejection",
+                                  "-2": "Internal Ejection", "3": "External inward interaction", "-3": "Internal inward interaction", "4": "Internal sweep", "-4": "External sweep"}
+    rank_def = {}
+    k=[1,-1,2,-2,3,-3,4,-4]
+    for i in k:
+        rank_def[df.at[cr, i]] =i
 
-    df['Rank 1'] = ''
-    df['Rank 1'][no_of_ranges+2] = '1'
-    df['Rank 2'] = ''
-    df['Rank 2'][no_of_ranges+2] = '-1'
-    df['Rank 3'] = ''
-    df['Rank 3'][no_of_ranges+2] = '2'
-    df['Rank 4'] = ''
-    df['Rank 4'][no_of_ranges+2] = '-2'
-    df['Rank 5'] = ''
-    df['Rank 5'][no_of_ranges+2] = '3'
-    df['Rank 6'] = ''
-    df['Rank 6'][no_of_ranges+2] = '-3'
-    df['Rank 7'] = ''
-    df['Rank 7'][no_of_ranges+2] = '4'
-    df['Rank 8'] = ''
-    df['Rank 8'][no_of_ranges+2] = '-4'
-
-    possible_ranks = ['Rank 1', 'Rank 2', 'Rank 3', 'Rank 4', 'Rank 5', 'Rank 6', 'Rank 7', 'Rank 8']
-
-    row_num = 0
-    for i in range(8):
-        df[possible_ranks[i]][row_num] = 9-int(overall_ranking[i])
-        if df[possible_ranks[i]][row_num]==1:
-            rank1.append(i)
-    row_num = row_num+2
+    values_sorted=sorted(rank_def.keys(),reverse=True)
     
-    for i in range(no_of_ranges):
-        for j in range(8):
-            df[possible_ranks[j]][row_num] = 9 - int(mod_ranking[i][j])
-            if df[possible_ranks[j]][row_num]==1:
-                rank1.append(j)
-        row_num = row_num + 1
-
-    df['Rank 1 Octant ID'] = ''
-    df['Rank 1 Octant name'] = ''
-
-    df['Rank 1 Octant ID'][0] = possible_octant_values[rank1[0]]
-    df['Rank 1 Octant name'][0] = possible_octant_names[rank1[0]]
-
-    row_num = 2
-
-    for i in range(no_of_ranges):
-        df['Rank 1 Octant ID'][row_num] = possible_octant_values[rank1[i+1]]
-        df['Rank 1 Octant name'][row_num] = possible_octant_names[rank1[i+1]]
-        row_num = row_num+1
-
-    row_num = row_num+3
-
-    columns_to_use = ['1', '-1', '2']
-
-    df[columns_to_use[0]][row_num] = 'Octant ID'
-    df[columns_to_use[1]][row_num] = 'Octant Name'
-    df[columns_to_use[2]][row_num] = 'Rank 1 Mod Values'
-    row_num = row_num+1
-
     for i in range(8):
-        df[columns_to_use[0]][row_num] = possible_octant_values[i]
-        df[columns_to_use[1]][row_num] = possible_octant_names[i]
-        df[columns_to_use[2]][row_num] = rank1[1:no_of_ranges+1].count(i)
-        row_num = row_num+1
-    
+        key=rank_def[values_sorted[i]]
+        if(key>0):
+            df.at[cr,"Rank "+str(key*2-1)]=i+1
+        else:
+            df.at[cr,"Rank "+str(key*(-2))]=i+1
+    df.at[cr, 'Rank 1 Octant ID'] = rank_def[values_sorted[0]]
+    df.at[cr, 'Rank 1 Octant Name'] = octant_name_id_mapping[str(rank_def[values_sorted[0]])]
+
+    return df
+
 ###Code
 
 #For part 1 i.e.  Data Pre-processing : Code same as that of tut 1 except handling excel file
@@ -242,8 +185,9 @@ octant_identification()
 
 
 #Part 3
+mod = 5000
+octant_range_names(mod)
 
-octant_range_names()
 
 
 
@@ -256,8 +200,6 @@ else:
     print("Please install 3.8.10. Instruction are present in the GitHub Repo/Webmail. Url: https://pastebin.com/nvibxmjw")
 
 
-#mod=5000 
-#octant_range_names(mod)
 
 
 
