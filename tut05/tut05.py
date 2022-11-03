@@ -38,15 +38,21 @@ def octant_range_names(mod=5000):
     df.at[cr,-1]="Octant Name"
     df.at[cr,2]="Count of Rank 1 Mod values"
     for i in range(8):
+        count=0
         df.at[cr+1+i,1]=k[i]
-        df.at[cr+1+i,-1]=octant_name_id_mapping[k[i]]
-        df.at[cr+1+i,2]=
+        df.at[cr+1+i,-1]=octant_name_id_mapping[str(k[i])]
+        for j in range(n):
+            if (df.at[2+j, "Rank 1 Octant ID"] == k[i]):
+                count=count+1
+               
+        df.at[cr+1+i,2]=count
     try:
         df.to_excel(
             'C:/Users/Gargi/Desktop/2001EE89_2022/tut05/output_octant.xlsx', index=False)
     except:
         print("Permission denied")
-
+        
+# For getting the ranks of each value 
 def rank(df,cr):
     octant_name_id_mapping = {"1": "Internal outward interaction", "-1": "External outward interaction", "2": "External Ejection",
                                   "-2": "Internal Ejection", "3": "External inward interaction", "-3": "Internal inward interaction", "4": "Internal sweep", "-4": "External sweep"}
@@ -68,7 +74,6 @@ def rank(df,cr):
 
     return df
 
-###Code
 
 #For part 1 i.e.  Data Pre-processing : Code same as that of tut 1 except handling excel file
 #To identify the octant by using U',V',W' values in the dataframe
