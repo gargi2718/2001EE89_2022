@@ -40,7 +40,7 @@ os.system("cls")
 ##Saving all the excel files in a the output/ folder. Only xlsx to be allowed
 
 ## output filename = input_filename[_octant_analysis_mod_5000].xlsx , ie, append _octant_analysis_mod_5000 to the original filename.
-
+dir_name=os.getcwd()
 octant_sign = [1, -1, 2, -2, 3, -3, 4, -4]
 octant_name_id_mapping = {1: "Internal outward interaction", -1: "External outward interaction", 2: "External Ejection",
                           -2: "Internal Ejection", 3: "External inward interaction", -3: "Internal inward interaction",
