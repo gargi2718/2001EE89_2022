@@ -1,7 +1,4 @@
 '''
-from datetime import datetime
-start_time = datetime.now()
-
 #Help
 def octant_analysis(mod=5000):
 	pass
@@ -27,7 +24,8 @@ octant_analysis(mod)
 end_time = datetime.now()
 print('Duration of Program Execution: {}'.format(end_time - start_time))
 '''
-'''
+#TUT 1-05 had pandas but using it it was difficult to make the output using this so instead all the files have been changed 
+
 from openpyxl.styles import Color, PatternFill, Font, Border, Side
 import glob
 import openpyxl
@@ -37,15 +35,6 @@ from platform import python_version
 start_time = datetime.now()
 
 os.system("cls")
-'''
-
-ver = python_version()
-
-if ver == "3.8.10":
-    print("Correct Version Installed")
-else:
-    print(
-        "Please install 3.8.10. Instruction are present in the GitHub Repo/Webmail. Url: https://pastebin.com/nvibxmjw")
 
 ##Read all the excel files in a batch format from the input/ folder. Only xlsx to be allowed
 ##Save all the excel files in a the output/ folder. Only xlsx to be allowed
@@ -705,9 +694,9 @@ def set_input_data(input_file_name, outputSheet):
     # Iterating complete file till time value is not None
     while (time != None):
         try:
-            u_sum += float(inputSheet.cell(start, 2).value)
-            v_sum += float(inputSheet.cell(start, 3).value)
-            w_sum += float(inputSheet.cell(start, 4).value)
+            u_sum += (inputSheet.cell(start, 2).value)
+            v_sum += (inputSheet.cell(start, 3).value)
+            w_sum += (inputSheet.cell(start, 4).value)
         except ValueError:
             print("Sheet input can't be converted to float!!")
             exit()
@@ -812,5 +801,3 @@ octant_analysis(mod)
 # This shall be the last lines of the code.
 end_time = datetime.now()
 print('Duration of Program Execution: {}'.format(end_time - start_time))
-'''
-

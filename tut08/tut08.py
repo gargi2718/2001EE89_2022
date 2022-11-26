@@ -1,4 +1,3 @@
-
 import os
 import pandas as pd
 import openpyxl
@@ -27,9 +26,10 @@ print('Duration of Program Execution: {}'.format(end_time - start_time))
 '''
 dir_name = os.path.dirname(__file__)
 
+
 start_time = datetime.now()
-ind_inn = open(dir_name+"/india_inns2.txt", "r+")  # india batting
-pak_inn = open(dir_name+"/pak_inns1.txt", "r+")  # pakistan batting
+innings_india = open(dir_name+"/india_inns2.txt", "r+")  # india batting
+innings_pakistan = open(dir_name+"/pak_inns1.txt", "r+")  # pakistan batting
 teams = open(dir_name+"/teams.txt", "r+")
 input_team = teams.readlines()
 
@@ -40,13 +40,13 @@ ind_team = input_team[2]
 ind_players = ind_team[20:-1:].split(",")
 
 
-lst_ind = ind_inn.readlines()  # 124
+lst_ind = innings_india.readlines()  # 124
 for i in lst_ind:
     if i == '\n':
         lst_ind.remove(i)
 
 
-lst_pak = pak_inn.readlines()  # 123
+lst_pak = innings_pakistan.readlines()  # 123
 for i in lst_pak:
     if i == '\n':
         lst_pak.remove(i)
@@ -269,22 +269,22 @@ for val in pak_bowlers.values():  # economy
 
 
 # pakistan batting
-names_pak_batters = []
+bat_pak_name = []
 for key in pak_bats.keys():
-    names_pak_batters.append(key)
+    bat_pak_name.append(key)
 
 
 for i in range(len(pak_bats)):
-    sheet.cell(5+i, 1).value = names_pak_batters[i]
-    sheet.cell(5+i, 5).value = pak_bats[names_pak_batters[i]][0]
-    sheet.cell(5+i, 6).value = pak_bats[names_pak_batters[i]][1]
-    sheet.cell(5+i, 7).value = pak_bats[names_pak_batters[i]][2]
-    sheet.cell(5+i, 8).value = pak_bats[names_pak_batters[i]][3]
-    sheet.cell(5+i, 9).value = pak_bats[names_pak_batters[i]][4]
-    if names_pak_batters[i] not in out_pak_bat:
+    sheet.cell(5+i, 1).value = bat_pak_name[i]
+    sheet.cell(5+i, 5).value = pak_bats[bat_pak_name[i]][0]
+    sheet.cell(5+i, 6).value = pak_bats[bat_pak_name[i]][1]
+    sheet.cell(5+i, 7).value = pak_bats[bat_pak_name[i]][2]
+    sheet.cell(5+i, 8).value = pak_bats[bat_pak_name[i]][3]
+    sheet.cell(5+i, 9).value = pak_bats[bat_pak_name[i]][4]
+    if bat_pak_name[i] not in out_pak_bat:
         sheet.cell(5+i, 3).value = "not out"
     else:
-        sheet.cell(5+i, 3).value = out_pak_bat[names_pak_batters[i]]
+        sheet.cell(5+i, 3).value = out_pak_bat[bat_pak_name[i]]
 
 sheet.cell(3, 1).value = "BATTERS"
 sheet["E3"] = "RUNS"
