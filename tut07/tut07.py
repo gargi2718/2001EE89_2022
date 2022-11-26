@@ -36,8 +36,9 @@ start_time = datetime.now()
 
 os.system("cls")
 
-##Read all the excel files in a batch format from the input/ folder. Only xlsx to be allowed
-##Save all the excel files in a the output/ folder. Only xlsx to be allowed
+##Reading all the excel files in a batch format from the input/ folder. Only xlsx to be allowed
+##Saving all the excel files in a the output/ folder. Only xlsx to be allowed
+
 ## output filename = input_filename[_octant_analysis_mod_5000].xlsx , ie, append _octant_analysis_mod_5000 to the original filename.
 
 octant_sign = [1, -1, 2, -2, 3, -3, 4, -4]
@@ -89,7 +90,7 @@ def set_frequency(longest, frequency, outputSheet):
 
 
 # Method to set time range for longest subsequence
-def longest_subsequence_time(longest, frequency, timeRange, outputSheet):
+def l_subseq_time(longest, frequency, timeRange, outputSheet):
     # Naming columns number
     col_length = 50
     col_freq = 51
@@ -144,7 +145,7 @@ def longest_subsequence_time(longest, frequency, timeRange, outputSheet):
             outputSheet.cell(row=i, column=j).border = black_border
 
 
-def count_longest_subsequence_freq_func(longest, outputSheet, total_count):
+def l_subseq_time(longest, outputSheet, total_count):
     # Dictionary to store consecutive sequence count_seq
     count_seq = {}
 
@@ -207,7 +208,7 @@ def count_longest_subsequence_freq_func(longest, outputSheet, total_count):
     set_frequency(longest, frequency, outputSheet)
 
     # Setting time range for longest subsequence
-    longest_subsequence_time(longest, frequency, timeRange, outputSheet)
+    l_subseq_time(longest, frequency, timeRange, outputSheet)
 
 
 # Method to set frequency count_seq to sheet
@@ -249,7 +250,7 @@ def find_longest_subsequence(outputSheet, total_count):
         last = current
 
     # Method to count_seq longest subsequence frequency
-    count_longest_subsequence_freq_func(longest, outputSheet, total_count)
+    l_subseq_time(longest, outputSheet, total_count)
 
 
 def transition_count_func(row, transition_count, outputSheet):
